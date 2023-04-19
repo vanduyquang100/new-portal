@@ -76,7 +76,7 @@ public class StudentManagement {
         } catch(ClassNotFoundException e) {
             e.printStackTrace();
         }
-        createDatabase();
+//        createDatabase();
         connectToServer();
     }
     public void createStudent(Student student) {
@@ -215,9 +215,14 @@ public class StudentManagement {
         return students;
     }
 
-    public ArrayList<Course> getCoursesByName(String courseName) throws SQLException {
+    public ArrayList<Course> getCoursesByName(String courseName, int sortType) throws SQLException {
         ArrayList<Course> courses = new ArrayList<>();
-        String query = "SELECT * FROM course WHERE name LIKE ?";
+        String query = "SELECT * FROM course c WHERE name LIKE ? ";
+        if (sortType == 0) { // sort by name
+            query += " ORDER BY c.name";
+        } else if (sortType == 1) {
+            query += "ORDER BY c.id";
+        }
         try (Connection conn = connectToServer();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, "%" + courseName + "%");
@@ -269,6 +274,8 @@ public class StudentManagement {
         String query = "SELECT * FROM course";
         if (sortType == 0) { // sort by name
             query += " ORDER BY course.name";
+        } else {
+            query += " ORDER BY course.id";
         }
         try (Connection conn = connectToServer();
              PreparedStatement statement = conn.prepareStatement(query)) {
@@ -335,6 +342,7 @@ public class StudentManagement {
                 "FROM course_score cs " +
                 "JOIN course ON cs.course_id = course.id" +
                 "WHERE sc.student_id = " + student.getId();
+
         if (year == 0) { // get all years
             query += " AND course.year = " + year;
         }

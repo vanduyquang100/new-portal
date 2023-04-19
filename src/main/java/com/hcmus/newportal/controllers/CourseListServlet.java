@@ -1,31 +1,33 @@
 package com.hcmus.newportal.controllers;
 
-import java.io.*;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-import com.hcmus.newportal.models.Student;
+import com.hcmus.newportal.models.Course;
 import com.hcmus.newportal.models.StudentManagement;
 import com.hcmus.newportal.models.StudentManagementSingleton;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"", "/students"}, loadOnStartup = 1)
-public class StudentListServlet extends HttpServlet {
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+@WebServlet(urlPatterns = {"/courses"})
+public class CourseListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         removeBrowserCache(response);
         try {
             String searchValue = request.getParameter("searchValue");
             if (searchValue != null) {
                 if (!searchValue.equals("")) {
-                    getStudentListByName(request, response, searchValue);
+                    getCourseListByName(request, response, searchValue);
                 } else {
-                    getStudentList(request, response);
+                    getCourseList(request, response);
                 }
             } else {
-                getStudentList(request, response);
+                getCourseList(request, response);
             }
         }catch (SQLException | IOException | ServletException |
                 InterruptedException | ClassNotFoundException e) {
@@ -43,44 +45,44 @@ public class StudentListServlet extends HttpServlet {
             }
             System.out.println("Type of POST is: " + type);
             if (type.equals("delete")) {
-                String studentId = request.getParameter("studentId");
-                if (studentId == null) { studentId = ""; }
+                String courseId = request.getParameter("courseId");
+                if (courseId == null) { courseId = ""; }
                 StudentManagement database = StudentManagementSingleton.getInstance();
-                System.out.println("Delete student: " + studentId);
-                database.deleteStudent(studentId);
-                response.sendRedirect(request.getContextPath() + "/");
+                System.out.println("Delete course: " + courseId);
+                database.deleteCourse(courseId);
+                response.sendRedirect(request.getContextPath() + "/courses");
             }
         } catch (SQLException | ClassNotFoundException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void getStudentList(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, InterruptedException, ServletException, IOException {
+    private void getCourseList(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, InterruptedException, ServletException, IOException {
         // get the sort type from the request parameter
         String type = request.getParameter("sortType");
         System.out.println("Type is " + type);
         int sortType = type == null? 0 : Integer.parseInt(type);
         StudentManagement database = StudentManagementSingleton.getInstance();
-        ArrayList<Student> studentList = database.getStudentList(sortType);
-        // set the list of students as a request attribute
-        request.setAttribute("studentList", studentList);
+        ArrayList<Course> courseList = database.getCourseList(sortType);
+
+        request.setAttribute("courseList", courseList);
         request.setAttribute("sortType", sortType);
 
-        // forward the request to the student list JSP
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/studentList.jsp");
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/courseList.jsp");
         dispatcher.forward(request, response);
     }
 
-    private void getStudentListByName(HttpServletRequest request, HttpServletResponse response, String searchValue) throws SQLException, ClassNotFoundException, InterruptedException, ServletException, IOException {
+    private void getCourseListByName(HttpServletRequest request, HttpServletResponse response, String searchValue) throws SQLException, ClassNotFoundException, InterruptedException, ServletException, IOException {
         String type = request.getParameter("sortType");
         int sortType = type == null? 0 : Integer.parseInt(type);
         StudentManagement database = StudentManagementSingleton.getInstance();
-        ArrayList<Student> studentList = database.getStudentsByName(searchValue, sortType);
-        request.setAttribute("studentList", studentList);
+        ArrayList<Course> courseList = database.getCoursesByName(searchValue, sortType);
+        request.setAttribute("courseList", courseList);
         request.setAttribute("searchValue", searchValue);
         request.setAttribute("sortType", sortType);
-        // forward the request to the student list JSP
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/studentList.jsp");
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/courseList.jsp");
         dispatcher.forward(request, response);
     }
 
