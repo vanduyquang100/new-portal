@@ -35,7 +35,7 @@
                     <input type="text" class="form-control" id="notes" name="notes"placeholder="Add notes">
                 </div>
                 <div class="mt-6 error-message text-center"><%= request.getAttribute("error") == null? "" : request.getAttribute("error") %></div>
-                <button type="submit" class="btn btn-primary btn-block mt-1 mb-5">Update Student</button>
+                <button type="submit" class="btn btn-primary btn-block mt-3 mb-5">Update Student</button>
             </form>
         </div>
     </div>
