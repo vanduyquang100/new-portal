@@ -22,7 +22,7 @@ $(document).ready(function() {
 
 function editStudent() {
     if (selectedRow != null) {
-        fetch(contextPath + '/edit-student?studentId=' + $(selectedRow).find('.row-id-value').text(), {
+        fetch(contextPath + '/edit-student?id=' + $(selectedRow).find('.row-id-value').text(), {
             method: 'GET'
         }).then(r => {
             location.href = r.url;

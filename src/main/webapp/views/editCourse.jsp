@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Update Course</title>
+    <title>Edit Course</title>
     <!-- Add Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -12,11 +12,11 @@
 <div class="container">
     <div class="justify-content-center">
         <div class="add-course">
-            <h1 class="mt-4 mb-3">Add Course</h1>
+            <h1 class="mt-4 mb-3">Edit Course</h1>
             <form method="post" action="${pageContext.request.contextPath}/edit-course">
                 <div class="form-group mt-2">
                     <label for="id">ID:</label>
-                    <input type="text" class="form-control" id="id" name="id" readonly placeholder="10-digit ID" value=""<%= request.getParameter("courseId") %>"">
+                    <input type="text" class="form-control" id="id" name="id" readonly value="<%= request.getParameter("id") %>">
                 </div>
                 <div class="form-group mt-2">
                     <label for="name">Name:</label>

@@ -9,20 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="34944434-27b9-4395-b451-86c8040ade8e" name="Changes" comment="Add student list related classes and servlets">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hcmus/newportal/controllers/AddCourseServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hcmus/newportal/controllers/CourseListServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hcmus/newportal/controllers/EditCourseServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/addCourse.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/courseList.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/editCourse.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/js/course.js" afterDir="false" />
+    <list default="true" id="34944434-27b9-4395-b451-86c8040ade8e" name="Changes" comment="Add throwing for IllegalArgumentException to display alert when adding courses.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hcmus/newportal/controllers/StudentListServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hcmus/newportal/controllers/StudentListServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hcmus/newportal/models/StudentManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hcmus/newportal/models/StudentManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/addStudent.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/addStudent.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/courseList.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/courseList.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/editCourse.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/editCourse.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/editStudent.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/editStudent.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/js/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/js/course.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/js/student.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/js/student.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,7 +235,7 @@
       <workItem from="1681813338801" duration="5441000" />
       <workItem from="1681833083979" duration="17396000" />
       <workItem from="1681853954145" duration="18950000" />
-      <workItem from="1681934073731" duration="4469000" />
+      <workItem from="1681934073731" duration="6241000" />
     </task>
     <task id="LOCAL-00001" summary="Add Student Class">
       <created>1681577924819</created>
@@ -258,7 +251,28 @@
       <option name="project" value="LOCAL" />
       <updated>1681904537762</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add course list related classes and servlets">
+      <created>1681938851834</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1681938851834</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Change Add and Edit Student UI">
+      <created>1681938884232</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681938884232</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add throwing for IllegalArgumentException to display alert when adding courses.">
+      <created>1681939082269</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1681939082269</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,6 +281,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add Student Class" />
     <MESSAGE value="Add student list related classes and servlets" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add student list related classes and servlets" />
+    <MESSAGE value="Add course list related classes and servlets" />
+    <MESSAGE value="Change Add and Edit Student UI" />
+    <MESSAGE value="Add throwing for IllegalArgumentException to display alert when adding courses." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add throwing for IllegalArgumentException to display alert when adding courses." />
   </component>
 </project>

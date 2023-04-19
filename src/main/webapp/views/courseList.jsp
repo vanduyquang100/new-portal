@@ -87,7 +87,8 @@
     </div>
     <div class="float-right d-flex pt-2 pb-2">
         <div class="list-options d-flex">
-            <button type="submit" class="btn btn-primary ml-1 mr-2" onclick="editCourse()">Edit</button>
+            <button type="submit" class="btn btn btn-success ml-1 mr-2" onclick="manageCourse()">Manage Course</button>
+            <button type="submit" class="btn btn-primary mr-2" onclick="editCourse()">Edit</button>
             <button type="submit" class="btn btn-danger" onclick="deleteCourse()">Delete</button>
         </div>
             <button type="submit" class="btn btn-primary add ml-2 pl-5 pr-5" onclick="addCourse()">Add Course</button>

@@ -16,7 +16,7 @@
             <form method="post" action="${pageContext.request.contextPath}/edit-student">
                 <div class="form-group mt-2">
                     <label for="id">ID:</label>
-                    <input type="text" contenteditable="false" class="form-control" id="id" name="id" readonly value="<%= request.getParameter("studentId") %>">
+                    <input type="text" contenteditable="false" class="form-control" id="id" name="id" readonly value="<%= request.getParameter("id") %>">
                 </div>
                 <div class="form-group mt-2">
                     <label for="name">Name:</label>

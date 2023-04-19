@@ -22,7 +22,7 @@ $(document).ready(function() {
 
 function editCourse() {
     if (selectedRow != null) {
-        fetch(contextPath + '/edit-course?courseId=' + $(selectedRow).find('.row-id-value').text(), {
+        fetch(contextPath + '/edit-course?id=' + $(selectedRow).find('.row-id-value').text(), {
             method: 'GET'
         }).then(r => {
             location.href = r.url;
@@ -52,6 +52,17 @@ function deleteCourse() {
 
     }
 }
+
+function manageCourse() {
+    if (selectedRow != null) {
+        fetch(contextPath + '/manage-course?courseId=' + $(selectedRow).find('.row-id-value').text(), {
+            method: 'GET'
+        }).then(r => {
+            location.href = r.url;
+        });
+    }
+}
+
 
 function switchSortType() {
     const sortInput = $('#sortTypeValue');
