@@ -102,7 +102,7 @@ public class StudentManagement {
         }
     }
 
-    public void createCourse(Course course) throws SQLException {
+    public void createCourse(Course course)  {
         String query = "INSERT INTO course (" +
                 "id, name, lecture, year, notes)" +
                 "VALUES (?, ?, ?, ?, ?)";
@@ -114,6 +114,13 @@ public class StudentManagement {
             statement.setInt(4, course.getYear());
             statement.setString(5, course.getNotes());
             statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Throw error.");
+            if (course.getId() == null) {
+                throw new IllegalArgumentException("Id cannot be null.");
+            } else {
+                throw new IllegalArgumentException("Id already exists.");
+            }
         }
     }
 
