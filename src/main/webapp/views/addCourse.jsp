@@ -9,7 +9,14 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/views/css/style.css"/>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
+    <div class="mb-0">
+        <form method="get" action="${pageContext.request.contextPath}/courses">
+            <button type="submit" class="btn btn-link">Back</button>
+        </form>
+    </div>
+    <div class="container">
+</div>
     <div class="justify-content-center">
         <div class="add-course">
             <h1 class="mt-4 mb-3">Add Course</h1>

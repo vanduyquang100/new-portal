@@ -3,7 +3,7 @@
 }
 
 .container-fluid {
-    padding: 20pt;
+    padding: 15pt;
 }
 
 label {
@@ -11,8 +11,8 @@ label {
 }
 
 .scroll-view.student-list {
-    height: 60vh;
-    max-height: 60vh;
+    height: 50vh;
+    max-height: 50vh;
     overflow: auto;
     /*border-color: #cbcbcb;*/
     background: #fffcfc;
@@ -20,8 +20,17 @@ label {
 }
 
 .scroll-view.course-list {
-    height: 60vh;
-    max-height: 60vh;
+    height: 50vh;
+    max-height: 50vh;
+    overflow: auto;
+    /*border-color: #cbcbcb;*/
+    background: #fffcfc;
+    border: #F2F2F2 solid 2pt;
+}
+
+.scroll-view.course-members-list {
+    height: 50vh;
+    max-height: 50vh;
     overflow: auto;
     /*border-color: #cbcbcb;*/
     background: #fffcfc;
@@ -31,11 +40,19 @@ label {
 .student-row:hover {
     border-radius: 10pt;
     background: #E4F3F5;
+    color: black;
 }
 
 .course-row:hover {
     border-radius: 10pt;
     background: #E4F3F5;
+    color: black;
+}
+
+.course-members-row:hover {
+    border-radius: 10pt;
+    background: #E4F3F5;
+    color: black;
 }
 
 .form-group {
@@ -43,13 +60,7 @@ label {
     margin: 0;
 }
 
-.student-row.is-selected {
-    border-radius: 10pt;
-    background: #007BFF;
-    color: white;
-}
-
-.course-row.is-selected {
+.is-selected {
     border-radius: 10pt;
     background: #007BFF;
     color: white;
@@ -75,6 +86,10 @@ label {
     padding: 10pt;
 }
 
+.course-members-panel {
+    padding: 10pt;
+}
+
 td {
     overflow: hidden;
 }
@@ -84,6 +99,10 @@ td {
 }
 
 h1 {
+    font-weight: bold;
+}
+
+h2 {
     font-weight: bold;
 }
 
@@ -143,4 +162,40 @@ h1 {
 
 .col-course-notes {
     width: 30%;
+}
+
+.col-cm-id {
+    width: 30%;
+}
+
+.col-cm-name {
+    width: 70%;
+}
+
+.col-student-courses-id {
+    width: 20%;
+}
+
+.col-student-courses-name {
+    width: 60%;
+}
+
+.col-student-courses-year {
+    width: 20%;
+}
+
+.col-student-grades-id {
+    width: 20%;
+}
+
+.col-student-grades-name {
+    width: 40%;
+}
+
+.col-student-grades-year {
+    width: 20%;
+}
+
+.col-student-grades-grade {
+    width: 20%;
 }

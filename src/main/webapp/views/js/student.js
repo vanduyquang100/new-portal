@@ -37,6 +37,22 @@ function addStudent() {
     });
 }
 
+function viewCourses() {
+    fetch(contextPath + '/student-courses?id=' + $(selectedRow).find('.row-id-value').text(), {
+        method: 'GET'
+    }).then(r => {
+        location.href = r.url;
+    });
+}
+
+function viewGrades() {
+    fetch(contextPath + '/grades?id=' + $(selectedRow).find('.row-id-value').text(), {
+        method: 'GET'
+    }).then(r => {
+        location.href = r.url;
+    });
+}
+
 function deleteStudent() {
     if (selectedRow != null) {
         fetch(contextPath + '/', {

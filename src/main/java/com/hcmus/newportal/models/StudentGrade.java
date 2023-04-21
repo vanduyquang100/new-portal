@@ -1,14 +1,14 @@
 package com.hcmus.newportal.models;
 
-public class StudentScore {
+public class StudentGrade {
     private final String studentId;
     private final String courseId;
     private final String courseName;
     private final int courseYear;
-    private final float score;
+    private final float grade;
 
-    StudentScore(String studentId, String courseId,
-                 String courseName, int courseYear, float score) {
+    public StudentGrade(String studentId, String courseId,
+                 String courseName, int courseYear, float grade) {
         this.courseId = courseId;
         this.studentId = studentId;
         this.courseName = courseName;
@@ -16,10 +16,10 @@ public class StudentScore {
             throw new IllegalArgumentException("Course's year is invalid.");
         }
         this.courseYear = courseYear;
-        if (score < 0) {
+        if (grade < 0) {
             throw new IllegalArgumentException("Score is invalid.");
         }
-        this.score = score;
+        this.grade = grade;
     }
 
     public String getCourseId() {
@@ -37,7 +37,7 @@ public class StudentScore {
     public int getCourseYear() {
         return this.courseYear;
     }
-    public float getScore() {
-        return this.score;
+    public float getGrade() {
+        return this.grade;
     }
 }

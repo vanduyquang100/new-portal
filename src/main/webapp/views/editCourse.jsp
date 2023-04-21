@@ -9,7 +9,13 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/views/css/style.css"/>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
+    <div class="mb-0">
+        <form method="get" action="${pageContext.request.contextPath}/courses">
+            <button type="submit" class="btn btn-link">Back</button>
+        </form>
+    </div>
+    <div class="container">
     <div class="justify-content-center">
         <div class="add-course">
             <h1 class="mt-4 mb-3">Edit Course</h1>
@@ -19,12 +25,12 @@
                     <input type="text" class="form-control" id="id" name="id" readonly value="<%= request.getParameter("id") %>">
                 </div>
                 <div class="form-group mt-2">
-                    <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Course's name">
+                    <label for="year">Year:</label>
+                    <input type="text" class="form-control" id="year" placeholder="Course's year" readonly name="year" value="<%= request.getParameter("year") %>">
                 </div>
                 <div class="form-group mt-2">
-                    <label for="year">Year:</label>
-                    <input type="text" class="form-control" id="year" placeholder="Course's year" name="year">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Course's name">
                 </div>
                 <div class="form-group mt-2">
                     <label for="lecture">Lecture:</label>
@@ -39,6 +45,7 @@
             </form>
         </div>
     </div>
+</div>
 </div>
 
 <!-- Bootstrap core JavaScript -->

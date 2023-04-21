@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Add Student</title>
+    <title>Edit Grades</title>
     <!-- Add Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -11,37 +11,38 @@
 <body>
 <div class="container-fluid">
     <div class="mb-0">
-        <form method="get" action="${pageContext.request.contextPath}/">
+        <form method="get" action="${pageContext.request.contextPath}/manage-course">
+            <input type="hidden" class="form-control" name="id" value="<%= request.getParameter("courseId") %>">
             <button type="submit" class="btn btn-link">Back</button>
         </form>
     </div>
     <div class="container">
     <div class="justify-content-center">
-        <div class="add-student">
-            <h1 class="mt-4 mb-3">Update Student</h1>
-            <form method="post" action="${pageContext.request.contextPath}/edit-student">
+        <div class="add-course">
+            <h1 class="mt-4 mb-3">Edit Grades</h1>
+            <form method="post" action="${pageContext.request.contextPath}/edit-grades">
                 <div class="form-group mt-2">
-                    <label for="id">ID:</label>
-                    <input type="text" contenteditable="false" class="form-control" id="id" name="id" readonly value="<%= request.getParameter("id") %>">
+                    <label for="courseId">Course ID:</label>
+                    <input type="text" class="form-control" id="courseId" name="courseId" readonly value="<%= request.getParameter("courseId") %>">
                 </div>
                 <div class="form-group mt-2">
-                    <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Student's name">
+                    <label for="year">Year:</label>
+                    <input type="text" class="form-control" id="year" readonly placeholder="Course's year" name="year"  value="<%= request.getParameter("year") %>">
                 </div>
                 <div class="form-group mt-2">
-                    <label for="birthday">Birthday:</label>
-                    <input type="date" class="form-control" id="birthday" value="2000-01-01" name="birthday">
+                    <label for="studentId">Student ID:</label>
+                    <input type="text" class="form-control" id="studentId" name="studentId" readonly value="<%= request.getParameter("studentId") %>">
                 </div>
                 <div class="form-group mt-2">
-                    <label for="address">Address:</label>
-                    <input type="text" class="form-control" id="address" name="address" placeholder="Student's address">
+                    <label for="studentName">Student Name:</label>
+                    <input type="text" class="form-control" id="studentName" name="studentName" readonly value="<%= request.getParameter("studentName") %>">
                 </div>
                 <div class="form-group mt-2">
-                    <label for="notes">Notes:</label>
-                    <input type="text" class="form-control" id="notes" name="notes"placeholder="Add notes">
+                    <label for="grades">Grades:</label>
+                    <input type="text" class="form-control" id="grades" name="grades" placeholder="Enter new grades">
                 </div>
                 <div class="mt-6 error-message text-center"><%= request.getAttribute("error") == null? "" : request.getAttribute("error") %></div>
-                <button type="submit" class="btn btn-primary btn-block mt-3 mb-5">Update Student</button>
+                <button type="submit" class="btn btn-primary btn-block mt-3 mb-5">Update Grades</button>
             </form>
         </div>
     </div>
@@ -59,6 +60,9 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
-<script src="${pageContext.request.contextPath}/views/js/student.js"></script>
+<script>
+    const contextPath = "${pageContext.request.contextPath}";
+</script>
+<script src="${pageContext.request.contextPath}/views/js/course.js"></script>
 </body>
 </html>

@@ -1,5 +1,4 @@
 package com.hcmus.newportal.models;
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -56,7 +55,8 @@ public class StudentManagement {
                     "course_id CHAR(10)," +
                     "student_id CHAR(10)," +
                     "year INT," +
-                    "score FLOAT)";
+                    "score FLOAT," +
+                    "PRIMARY KEY (course_id, student_id, year))";
 
             Statement statement = conn.createStatement();
             statement.executeUpdate(studentTable);
@@ -73,12 +73,13 @@ public class StudentManagement {
     public StudentManagement() throws SQLException, ClassNotFoundException, InterruptedException {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        } catch(ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-//        createDatabase();
+        createDatabase(); // Comment out this line
         connectToServer();
     }
+
     public void createStudent(Student student) {
         String query = "INSERT INTO student (" +
                 "id, name, birthday, address, notes)" +
@@ -102,7 +103,7 @@ public class StudentManagement {
         }
     }
 
-    public void createCourse(Course course)  {
+    public void createCourse(Course course) {
         String query = "INSERT INTO course (" +
                 "id, name, lecture, year, notes)" +
                 "VALUES (?, ?, ?, ?, ?)";
@@ -124,14 +125,29 @@ public class StudentManagement {
         }
     }
 
-    public void addStudent(String courseId, String studentId) {
+    public void addStudent(String courseId, int year, String studentId) {
         String query = "INSERT INTO course_members (" +
-                "course_id, student_id, student_name) " +
-                "SELECT ?, id, name FROM student WHERE id = ?";
+                "course_id, student_id, year, score) " +
+                "VALUES (?, ?, ?, 0.0)";
         try (Connection conn = connectToServer();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, courseId);
             statement.setString(2, studentId);
+            statement.setInt(3, year);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateGrades(String courseId, int year, String studentId, double grade) {
+        String query = "UPDATE course_members SET score = ? WHERE course_id = ? AND year = ? AND student_id = ?";
+        try (Connection conn = connectToServer();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setDouble(1, grade);
+            statement.setString(2, courseId);
+            statement.setInt(3, year);
+            statement.setString(4, studentId);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -156,13 +172,17 @@ public class StudentManagement {
         }
     }
 
-    public void removeStudent(String courseId, String studentId) throws SQLException {
-        String query = "DELETE FROM course_members WHERE course_id = ? AND student_id = ?";
+    public void removeStudent(String courseId, int year, String studentId) {
+        String query = "DELETE FROM course_members WHERE course_id = ? AND student_id = ? AND year = ?";
         try (Connection conn = connectToServer();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, courseId);
             statement.setString(2, studentId);
+            statement.setInt(3, year);
             statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -247,7 +267,7 @@ public class StudentManagement {
         return courses;
     }
 
-    public ArrayList<Student> getStudentList(int sortType) throws SQLException{
+    public ArrayList<Student> getStudentList(int sortType) throws SQLException {
         ArrayList<Student> students = new ArrayList<>();
         String query = "SELECT * FROM student s LEFT JOIN " +
                 "(SELECT student_id, AVG(score) as grade " +
@@ -276,7 +296,7 @@ public class StudentManagement {
         return students;
     }
 
-    public ArrayList<Course> getCourseList(int sortType) throws SQLException{
+    public ArrayList<Course> getCourseList(int sortType) throws SQLException {
         ArrayList<Course> courses = new ArrayList<>();
         String query = "SELECT * FROM course";
         if (sortType == 0) { // sort by name
@@ -300,11 +320,13 @@ public class StudentManagement {
         return courses;
     }
 
-    public ArrayList<CourseMember> getCourseMembers() throws SQLException{
+    public ArrayList<CourseMember> getCourseMembers(Course course) throws SQLException {
         ArrayList<CourseMember> members = new ArrayList<>();
         String query = "SELECT * " +
                 "FROM course_members sc " +
-                "JOIN student ON sc.student_id = student.id";
+                "JOIN student ON sc.student_id = student.id " +
+                "WHERE sc.course_id = " + course.getId() +
+                "AND sc.year = " + course.getYear();
         try (Connection conn = connectToServer();
              PreparedStatement statement = conn.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
@@ -312,20 +334,21 @@ public class StudentManagement {
                 String studentId = resultSet.getString("student_id");
                 String courseId = resultSet.getString("course_id");
                 String studentName = resultSet.getString("name");
-                CourseMember member = new CourseMember(courseId, studentName, studentName);
+                int year = resultSet.getInt("year");
+                CourseMember member = new CourseMember(courseId, studentId, studentName, year);
                 members.add(member);
             }
         }
         return members;
     }
 
-    public ArrayList<StudentCourse> getStudentCourseList(Student student, int year) throws SQLException{
+    public ArrayList<StudentCourse> getStudentCourseList(Student student, int year) throws SQLException {
         ArrayList<StudentCourse> courses = new ArrayList<>();
         String query = "SELECT * " +
-                "FROM student_course sc " +
-                "JOIN course ON sc.course_id = course.id" +
-                "WHERE sc.student_id = " + student.getId();
-        if (year == 0) { // get all years
+                "FROM course_members cm " +
+                "JOIN course ON cm.course_id = course.id " +
+                "WHERE cm.student_id = " + student.getId();
+        if (year != 0) { // get only a year
             query += " AND course.year = " + year;
         }
         try (Connection conn = connectToServer();
@@ -343,14 +366,13 @@ public class StudentManagement {
         return courses;
     }
 
-    public ArrayList<StudentScore> getStudentScores(Student student, int year) throws SQLException{
-        ArrayList<StudentScore> courses = new ArrayList<>();
+    public ArrayList<StudentGrade> getStudentGrades(Student student, int year) throws SQLException {
+        ArrayList<StudentGrade> grades = new ArrayList<>();
         String query = "SELECT * " +
-                "FROM course_score cs " +
-                "JOIN course ON cs.course_id = course.id" +
-                "WHERE sc.student_id = " + student.getId();
-
-        if (year == 0) { // get all years
+                "FROM course_members cm " +
+                "JOIN course ON cm.course_id = course.id " +
+                "WHERE cm.student_id = " + student.getId();
+        if (year != 0) { // get only a year
             query += " AND course.year = " + year;
         }
         try (Connection conn = connectToServer();
@@ -362,11 +384,56 @@ public class StudentManagement {
                 String courseName = resultSet.getString("name");
                 int courseYear = resultSet.getInt("year");
                 float score = resultSet.getFloat("score");
-                StudentScore course = new StudentScore(studentId, courseId, courseName, courseYear, score);
-                courses.add(course);
+                StudentGrade grade = new StudentGrade(studentId, courseId, courseName, courseYear, score);
+                grades.add(grade);
             }
         }
-        return courses;
+        return grades;
+    }
+
+    public Course getCourse(String courseId, int courseYear) {
+        String query = "SELECT * " +
+                "FROM course c " +
+                "WHERE c.id = " + courseId +
+                " AND c.year = " + courseYear;
+
+        try (Connection conn = connectToServer();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String name = resultSet.getString("name");
+                String lecture = resultSet.getString("lecture");
+                int year = resultSet.getInt("year");
+                String notes = resultSet.getString("notes");
+                Course course = new Course(id, name, year, lecture, notes);
+                return course;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Student getStudent(String studentId) {
+        String query = "SELECT * FROM student s WHERE s.id = " + studentId;
+        try (Connection conn = connectToServer();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String name = resultSet.getString("name");
+                Date birthday = resultSet.getDate("birthday");
+                String address = resultSet.getString("address");
+                String notes = resultSet.getString("notes");
+                return new Student(id, name, birthday, 0.0f, address, notes);
+            }
+            return null;
+        } catch (SQLException e) {
+            System.out.print("Exception:" + e.toString());
+            throw new RuntimeException(e);
+        }
     }
 }
 

@@ -18,6 +18,11 @@
 </head>
 <body>
 <div class="container-fluid">
+    <div class="mb-0">
+        <form class="d-flex justify-content-end" method="get" action="${pageContext.request.contextPath}/courses">
+            <button type="submit" class="btn btn-outline-primary pl-4 pr-4">Course List</button>
+        </form>
+    </div>
     <div class="row">
         <div class="ml-20 mr-20 student-panel w-100">
             <div class="d-flex justify-content-between mb-4">
@@ -90,7 +95,9 @@
     </div>
     <div class="float-right d-flex pt-2 pb-2">
         <div class="list-options d-flex">
-            <button type="submit" class="btn btn-primary ml-1 mr-2" onclick="editStudent()">Edit</button>
+            <button type="submit" class="btn btn-outline-success mr-2" onclick="viewCourses()">View Courses</button>
+            <button type="submit" class="btn btn-outline-success mr-2" onclick="viewGrades()">View Grades</button>
+            <button type="submit" class="btn btn-primary mr-2" onclick="editStudent()">Edit</button>
             <button type="submit" class="btn btn-danger" onclick="deleteStudent()">Delete</button>
         </div>
             <button type="submit" class="btn btn-primary add ml-2 pl-5 pr-5" onclick="addStudent()">Add Student</button>

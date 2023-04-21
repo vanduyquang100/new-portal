@@ -9,7 +9,13 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/views/css/style.css"/>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
+    <div class="mb-0">
+        <form method="get" action="${pageContext.request.contextPath}/">
+            <button type="submit" class="btn btn-link">Back</button>
+        </form>
+    </div>
+    <div class="container">
     <div class="justify-content-center">
         <div class="add-student">
             <h1 class="mt-4 mb-3">Add Student</h1>
@@ -39,6 +45,7 @@
             </form>
         </div>
     </div>
+</div>
 </div>
 
 <!-- Bootstrap core JavaScript -->

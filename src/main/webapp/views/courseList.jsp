@@ -18,6 +18,11 @@
 </head>
 <body>
 <div class="container-fluid">
+    <div class="mb-0">
+        <form class="d-flex justify-content-end" method="get" action="${pageContext.request.contextPath}/">
+            <button type="submit" class="btn btn-outline-primary pl-4 pr-4">Student List</button>
+        </form>
+    </div>
     <div class="row">
         <div class="ml-20 mr-20 student-panel w-100">
             <div class="d-flex justify-content-between mb-4">
@@ -75,7 +80,7 @@
                     <tr class="course-row">
                         <td class="row-id-value"><%= course.getId() %></td>
                         <td class="ellipsis"><%= course.getName() %></td>
-                        <td><%= course.getYear() %></td>
+                        <td class="row-year-value"><%= course.getYear() %></td>
                         <td class="ellipsis"><%= course.getLecture() %></td>
                         <td class="ellipsis"><%= course.getNotes() %></td>
                     </tr>
